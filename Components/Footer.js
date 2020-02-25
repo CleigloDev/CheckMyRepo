@@ -4,7 +4,7 @@ import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 const Footer = props => {
   return (
     <View style={styles.ViewStyle}>
-        <TouchableOpacity onPress={() => {}}>
+        <TouchableOpacity onPress={props.navBack}>
             <Text style={styles.TextStyle}>{props.buttonTitle}</Text>
         </TouchableOpacity>
     </View>
