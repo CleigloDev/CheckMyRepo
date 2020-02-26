@@ -5,22 +5,22 @@ import Footer from './Footer';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-const InsertUsername = props => {
+const InsertUsername = () => {
     const [tempUserName, setTempUsername] = useState("");
 
     return (
         <View style={styles.MainView}>
             <Header headerTitle={"User"} iconVisible={true} 
-                navBack={props.showMainPage}/>
+                navBack={() => {}}/>
             <View style={styles.flex7}>
                 <View style={styles.ViewText}>
                     <TextInput style={styles.TextStyle} 
-                        value={props.userName}
+                        value={tempUserName}
                         onChangeText={text => setTempUsername(text)}
                         placeholder={"Type your github username"}></TextInput>
                 </View>
             </View>
-            <Footer buttonTitle={"Done"} functionToExecute={props.showMainPage}/>
+            <Footer buttonTitle={"Done"} functionToExecute={() => {}}/>
         </View>
     );
 };

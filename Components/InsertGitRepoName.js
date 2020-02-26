@@ -5,22 +5,22 @@ import Footer from './Footer';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-const InsertGitRepo = props => {
+const InsertGitRepo = () => {
     const [tempRepoName, setTempRepoName] = useState("");
 
     return (
         <View style={styles.MainView}>
             <Header headerTitle={"Repository"} iconVisible={true} 
-                navBack={props.showMainPage}/>
+                navBack={() => {}}/>
             <View style={styles.flex7}>
                 <View style={styles.ViewText}>
                     <TextInput style={styles.TextStyle} 
-                        value={props.repoName}
+                        value={tempRepoName}
                         onChangeText={text => setTempRepoName(text)}
                         placeholder={"Type your github username"}></TextInput>
                 </View>
             </View>
-            <Footer buttonTitle={"Done"} functionToExecute={props.showMainPage}/>
+            <Footer buttonTitle={"Done"} functionToExecute={() => {}}/>
         </View>
     );
 };
