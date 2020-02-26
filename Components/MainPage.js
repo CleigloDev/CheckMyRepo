@@ -35,7 +35,7 @@ const Home = props => {
 
             </View>
         </View>
-        <Footer buttonTitle={"Check"} navBack={props.showMainPage}/>
+        <Footer buttonTitle={"Check"} functionToExecute={props.showMainPage}/>
     </View>
   );
 };

@@ -9,7 +9,7 @@ const Header = props => {
     <View style={styles.MinFlex}>
         <View style={styles.MainViewStyle}>
             {props.iconVisible ? <View style={styles.MinFlex}>
-                <TouchableOpacity onPress={(event) => props.navBack(event, true)}>
+                <TouchableOpacity onPress={props.navBack}>
                     <Icon name={"back"} size={20}></Icon>
                 </TouchableOpacity>
             </View> : null}

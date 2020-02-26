@@ -43,10 +43,10 @@ const App = () => {
           userName={userName} repoName={repoName} showMainPage={sendMessage}/> :
           null}
         {isAddUserVisible ? 
-          <InsertUsername changeTextUsername={changeTextUsername} userName={userName} showMainPage={showUserPage}/> :
+          <InsertUsername showMainPage={showUserPage}/> :
           null}
         {isAddRepoVisible ? 
-          <InsertGit changeTextRepo={changeTextRepo} repoName={repoName} showMainPage={showRepoPage}/> :
+          <InsertGit showMainPage={showRepoPage}/> :
           null}
       </SafeAreaView>
     </>
