@@ -18,20 +18,24 @@ const Home = props => {
                 <TouchableOpacity onPress={props.showUserPage}>
                     <View style={styles.flexDirectionRow}>
                         <Text style={styles.TextMain}>/</Text>
-                        <Text style={styles.TextPlaceHolder}>{props.userName !== "" ? props.userName : "user"}</Text>
+                        <Text style={styles.TextPlaceHolder}>
+                            {props.userName !== "" ? props.userName : "user"}
+                        </Text>
                     </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity onPress={props.showRepoPage}>
                     <View style={styles.flexDirectionRow}>
                         <Text style={styles.TextMain}>/</Text>
-                        <Text style={styles.TextPlaceHolder}>{props.repoName !== "" ? props.repoName : "repo"}</Text>
+                        <Text style={styles.TextPlaceHolder}>
+                            {props.repoName !== "" ? props.repoName : "repo"}
+                        </Text>
                     </View>
                 </TouchableOpacity>
 
             </View>
         </View>
-        <Footer buttonTitle={"Check"}/>
+        <Footer buttonTitle={"Check"} navBack={props.showMainPage}/>
     </View>
   );
 };

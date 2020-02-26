@@ -10,13 +10,27 @@ const App = () => {
   const [isAddUserVisible, changeVisibleUser] = useState(false);
   const [isAddRepoVisible, changeVisibleRepo] = useState(false);
 
-  showRepoPage = (nothingInteresting, bDeleteContent) => {
-    bDeleteContent && typeof bDeleteContent === "boolean" ? changeTextRepo(repoName) : null;
+  sendMessage = () => {
+    fetch("https://pushmore.marc.io/webhook/qnUSj4NmQ2qdfzCPv4jM5ByZ", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'text/plain',
+      },
+      body: JSON.stringify({repoUrl: `github.com/${userName}/${repoName}`, sender: "Carlo Lunetta"}),
+    }).then(res => res.text()).then(textRes => {
+      if (!(/Error/gmi.test(textRes))) {
+        alert("Yes, message has been sent");
+      }
+    }).catch(err => {
+      alert("Ops some error occured, please retry.");
+    });
+  };
+
+  showRepoPage = () => {
     changeVisibleRepo(!isAddRepoVisible);
   };
 
-  showUserPage = (nothingInteresting, bDeleteContent) => {
-    bDeleteContent && typeof bDeleteContent === "boolean" ? changeTextUsername(userName) : null;
+  showUserPage = () => {
     changeVisibleUser(!isAddUserVisible);
   };
 
@@ -26,7 +40,7 @@ const App = () => {
       <SafeAreaView style={{flex: 1}}>
         {!isAddUserVisible && !isAddRepoVisible ? 
           <MainPage showUserPage={showUserPage} showRepoPage={showRepoPage} 
-          userName={userName} repoName={repoName}/> :
+          userName={userName} repoName={repoName} showMainPage={sendMessage}/> :
           null}
         {isAddUserVisible ? 
           <InsertUsername changeTextUsername={changeTextUsername} userName={userName} showMainPage={showUserPage}/> :
