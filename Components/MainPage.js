@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Dimensions, Text, TouchableOpacity, SafeAreaView, StatusBar} from 'react-native';
+import NetInfo from "@react-native-community/netinfo";
+
 import Header from './Header';
 import Footer from './Footer';
 
@@ -22,7 +24,7 @@ const Home = ({navigation}) => {
             userName !== sUsername ? changeTextUsername(sUsername) : null : null;
     }, []);
 
-    sendMessage = () => {
+    _sendMessage = () => {
         setButtonEnabled(true);
         fetch("https://pushmore.marc.io/webhook/qnUSj4NmQ2qdfzCPv4jM5ByZ", {
             method: "POST",
@@ -43,6 +45,17 @@ const Home = ({navigation}) => {
             setBackgroundColor("#ffacab");
             setError("BADREQUEST");
             setButtonEnabled(true);
+        });
+    };
+
+    checkConnectionBeforeSend = () => {
+        NetInfo.fetch().then(state => {
+            if(state.isConnected){
+                this._sendMessage();
+            }else{
+                setBackgroundColor("#ffacab");
+                setError("INTERNET");
+            }
         });
     };
 
@@ -113,7 +126,7 @@ const Home = ({navigation}) => {
                 </View>
                 <Footer buttonTitle={"Check"} buttonDisabled={checkButtonDisabled}
                  functionToExecute={
-                    repoName !== "" && userName !== "" ? sendMessage : 
+                    repoName !== "" && userName !== "" ? checkConnectionBeforeSend : 
                     () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/>
             </View>
         </SafeAreaView>
