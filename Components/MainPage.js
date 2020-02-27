@@ -36,7 +36,9 @@ const Home = ({navigation}) => {
             if (!(/Error/gmi.test(textRes))) {
                 setError("");
                 setBackgroundColor("#caffda");
-                
+                setTimeout(() => {
+                    navigation.navigate('LastPage');
+                }, 300);
             }else{
                 setBackgroundColor("#ffacab");
                 setError("BADREQUEST");
