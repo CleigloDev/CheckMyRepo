@@ -10,7 +10,6 @@ const InsertUsername = ({navigation}) => {
     const [tempUserName, setTempUsername] = useState("");
 
     handleHardwareBack = () => {
-        this.backHandler && this.backHandler.remove ? this.backHandler.remove() : null;
         navToHome();
         return true;
     };
@@ -29,6 +28,7 @@ const InsertUsername = ({navigation}) => {
             index: 0,
             actions: [NavigationActions.navigate(oNavigationParm)],
         });
+        this.backHandler && this.backHandler.remove ? this.backHandler.remove() : null;
         navigation.dispatch(resetHomeScreen);
     };
 

@@ -10,7 +10,6 @@ const InsertGitRepo = ({navigation}) => {
     const [tempRepoName, setTempRepoName] = useState("");
 
     handleHardwareBack = () => {
-        this.backHandler && this.backHandler.remove ? this.backHandler.remove() : null;
         navToHome();
         return true;
     };
@@ -29,6 +28,7 @@ const InsertGitRepo = ({navigation}) => {
             index: 0,
             actions: [NavigationActions.navigate(oNavigationParm)],
         });
+        this.backHandler && this.backHandler.remove ? this.backHandler.remove() : null;
         navigation.dispatch(resetHomeScreen);
     };
 
