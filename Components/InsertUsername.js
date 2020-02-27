@@ -16,7 +16,8 @@ const InsertUsername = ({navigation}) => {
 
     useEffect(() => {
         console.log("width: "+ screenWidth);
-        this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleHardwareBack);
+        console.log("height: "+ screenHeight);
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', handleHardwareBack);
     }, []);
 
     navToHome = (bDonePressed) => {
@@ -48,12 +49,13 @@ const InsertUsername = ({navigation}) => {
                                     tempUserName === "" ? 
                                     navigation.getParam("userName", "") : tempUserName
                                 }
+                                onSubmitEditing={() => {navToHome(true)}}
                                 onChangeText={text => setTempUsername(text)}
                                 placeholder={"Type your github username"}></TextInput>
                         </View>
                     </View>
-                    <Footer buttonTitle={"Done"} buttonDisabled={false} functionToExecute={() => {navToHome(true)}}/>
                 </View>
+                <Footer buttonTitle={"Done"} buttonDisabled={false} functionToExecute={() => {navToHome(true)}}/>
             </SafeAreaView>
         </>
     );
@@ -62,10 +64,10 @@ const InsertUsername = ({navigation}) => {
 var styles = StyleSheet.create({
     MainView: {
         flexDirection: 'column',
-        flex: 1,
+        flex: Math.abs((screenHeight*1)/896),
     },
     flex7: {
-        flex: 7,
+        flex: Math.abs((screenHeight*7)/896),
     },
     TextStyle: {
         fontSize: Math.abs((screenWidth*20)/414),

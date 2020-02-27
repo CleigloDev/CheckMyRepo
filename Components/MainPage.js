@@ -106,7 +106,7 @@ const Home = ({navigation}) => {
                         </View>
                         
                         {error !== "" ?
-                            <View style={{...styles.flexDirectionColumn, ...{flex: 2.2}}}>
+                            <View style={{...styles.flexDirectionColumn, ...{flex: Math.abs((screenHeight*2)/896)}}}>
                                 <View style={styles.flexErrorView}>
                                     <Text style={styles.textCheckYour}>Check your </Text>
                                     <Text style={styles.textBoldError}>
@@ -125,11 +125,11 @@ const Home = ({navigation}) => {
                             </View> : null}
                     </View>
                 </View>
-                <Footer buttonTitle={"Check"} buttonDisabled={checkButtonDisabled}
+            </View>
+            <Footer buttonTitle={"Check"} buttonDisabled={checkButtonDisabled}
                  functionToExecute={
                     repoName !== "" && userName !== "" ? checkConnectionBeforeSend : 
                     () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/>
-            </View>
         </SafeAreaView>
     </>
   );
@@ -138,10 +138,10 @@ const Home = ({navigation}) => {
 var styles = StyleSheet.create({
     MainView: {
         flexDirection: 'column',
-        flex: 1,
+        flex: Math.abs((screenHeight*1)/896),
     },
     ViewContent: {
-        flex: 7,
+        flex: Math.abs((screenHeight*7)/896),
         flexDirection: 'row',
     },
     TextMain: {
@@ -160,10 +160,10 @@ var styles = StyleSheet.create({
         flexDirection: 'column',
     },
     flexContent: {
-        flex: 10,
+        flex: Math.abs((screenHeight*10)/896),
     },
     flexNullView: {
-        flex: 0.7,
+        flex: Math.abs((screenHeight*0.7)/896),
     },
     flexErrorView: {
         flexDirection: 'row'

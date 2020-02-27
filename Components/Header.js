@@ -33,10 +33,10 @@ var styles = StyleSheet.create({
         alignItems: 'center'
     },
     MinFlex:{
-        flex: 1,
+        flex: Math.abs((screenHeight*1)/896),
     },
     MaxFlex: {
-        flex: 12,
+        flex: Math.abs((screenHeight*12)/896),
     },
     TextStyle: {
         fontSize: Math.abs((screenWidth*25)/414), 

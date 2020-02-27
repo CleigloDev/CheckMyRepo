@@ -47,12 +47,13 @@ const InsertGitRepo = ({navigation}) => {
                                     tempRepoName === "" ? 
                                     navigation.getParam("repoName", "") : tempRepoName
                                 }
+                                onSubmitEditing={() => {navToHome(true)}}
                                 onChangeText={text => setTempRepoName(text)}
                                 placeholder={"Type your github username"}></TextInput>
                         </View>
                     </View>
-                    <Footer buttonTitle={"Done"} buttonDisabled={false} functionToExecute={() => {navToHome(true)}}/>
                 </View>
+                <Footer buttonTitle={"Done"} buttonDisabled={false} functionToExecute={() => {navToHome(true)}}/>
             </SafeAreaView>
         </>
     );
@@ -61,10 +62,10 @@ const InsertGitRepo = ({navigation}) => {
 var styles = StyleSheet.create({
     MainView: {
         flexDirection: 'column',
-        flex: 1,
+        flex: Math.abs((screenHeight*1)/896),
     },
     flex7: {
-        flex: 7,
+        flex: Math.abs((screenHeight*7)/896),
     },
     TextStyle: {
         fontSize: Math.abs((screenWidth*20)/414),
