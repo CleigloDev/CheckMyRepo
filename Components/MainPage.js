@@ -85,29 +85,27 @@ const Home = ({navigation}) => {
                 <View style={styles.ViewContent}>
                     <View style={styles.flexNullView}/>
                     <View style={{...styles.flexContent, ...styles.flexDirectionColumn}}>
-                        <View style={styles.flexNullView}>
-                        <Text style={styles.TextMain}>github.com</Text>
-                        
-                        <TouchableOpacity onPress={navToUserName}>
-                            <View style={styles.flexDirectionRow}>
-                                <Text style={styles.TextMain}>/</Text>
-                                <Text style={styles.TextPlaceHolder}>
-                                    {userName !== "" ? userName : "user"}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
+                        <View style={styles.flexGitInfoView}>
+                            <Text style={styles.TextMain}>github.com</Text>
+                            
+                            <TouchableOpacity onPress={navToUserName}>
+                                <View style={styles.flexDirectionRow}>
+                                    <Text style={styles.TextMain}>/</Text>
+                                    <Text style={styles.TextPlaceHolder}>
+                                        {userName !== "" ? userName : "user"}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
 
-                        <TouchableOpacity onPress={navToInsertGit}>
-                            <View style={styles.flexDirectionRow}>
-                                <Text style={styles.TextMain}>/</Text>
-                                <Text style={styles.TextPlaceHolder}>
-                                    {repoName !== "" ? repoName : "repo"}
-                                </Text>
-                            </View>
-                        </TouchableOpacity>
-                        </View>
-                        
-                        {error !== "" ?
+                            <TouchableOpacity onPress={navToInsertGit}>
+                                <View style={styles.flexDirectionRow}>
+                                    <Text style={styles.TextMain}>/</Text>
+                                    <Text style={styles.TextPlaceHolder}>
+                                        {repoName !== "" ? repoName : "repo"}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
+                            {error !== "" ?
                             <View style={{...styles.flexDirectionColumn, ...{flex: Math.abs((screenHeight*2)/896)}}}>
                                 <View style={styles.flexErrorView}>
                                     <Text style={styles.textCheckYour}>Check your </Text>
@@ -125,6 +123,9 @@ const Home = ({navigation}) => {
                                         </> : null}
                                 </View>
                             </View> : null}
+                        </View>
+                        
+                        
                     </View>
                 </View>
             </View>
@@ -165,6 +166,9 @@ var styles = StyleSheet.create({
         flex: Math.abs((screenHeight*10)/896),
     },
     flexNullView: {
+        flex: Math.abs((screenHeight*0.7)/896),
+    },
+    flexGitInfoView: {
         flex: Math.abs((screenHeight*0.7)/896),
     },
     flexErrorView: {
