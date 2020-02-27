@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import { StackActions, NavigationActions } from 'react-navigation';
-import {View, StyleSheet, TextInput, Dimensions, SafeAreaView, StatusBar} from 'react-native';
+import { StackActions, NavigationActions} from 'react-navigation';
+import {View, StyleSheet, TextInput, Dimensions, SafeAreaView, StatusBar, BackHandler} from 'react-native';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -8,6 +8,16 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const InsertUsername = ({navigation}) => {
     const [tempUserName, setTempUsername] = useState("");
+
+    handleHardwareBack = () => {
+        this.backHandler && this.backHandler.remove ? this.backHandler.remove() : null;
+        navToHome();
+        return true;
+    };
+
+    useEffect(() => {
+        this.backHandler = BackHandler.addEventListener('hardwareBackPress', this.handleHardwareBack);
+    }, []);
 
     navToHome = (bDonePressed) => {
         var oNavigationParm = { routeName: 'Home'};
