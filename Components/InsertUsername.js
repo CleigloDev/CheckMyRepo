@@ -1,27 +1,50 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, TextInput, Dimensions} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { StackActions, NavigationActions } from 'react-navigation';
+import {View, StyleSheet, TextInput, Dimensions, SafeAreaView, StatusBar} from 'react-native';
 import Header from './Header';
 import Footer from './Footer';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-const InsertUsername = () => {
+const InsertUsername = ({navigation}) => {
     const [tempUserName, setTempUsername] = useState("");
 
+    navToHome = (bDonePressed) => {
+        var oNavigationParm = { routeName: 'Home'};
+        oNavigationParm = {...oNavigationParm, ...{params: {
+            userName: bDonePressed ? tempUserName : navigation.getParam("userName", ""),
+            repoName: navigation.getParam("repoName", ""),
+        }}};
+        const resetHomeScreen = StackActions.reset({
+            index: 0,
+            actions: [NavigationActions.navigate(oNavigationParm)],
+        });
+        navigation.dispatch(resetHomeScreen);
+    };
+
     return (
-        <View style={styles.MainView}>
-            <Header headerTitle={"User"} iconVisible={true} 
-                navBack={() => {}}/>
-            <View style={styles.flex7}>
-                <View style={styles.ViewText}>
-                    <TextInput style={styles.TextStyle} 
-                        value={tempUserName}
-                        onChangeText={text => setTempUsername(text)}
-                        placeholder={"Type your github username"}></TextInput>
+        <>
+            <StatusBar barStyle="dark-content" />
+            <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+                <View style={styles.MainView}>
+                    <Header headerTitle={"User"} iconVisible={true} 
+                        navBack={() => {navToHome(false)}}/>
+                    <View style={styles.flex7}>
+                        <View style={styles.ViewText}>
+                            <TextInput style={styles.TextStyle} 
+                                autoFocus={true}
+                                value={
+                                    tempUserName === "" ? 
+                                    navigation.getParam("userName", "") : tempUserName
+                                }
+                                onChangeText={text => setTempUsername(text)}
+                                placeholder={"Type your github username"}></TextInput>
+                        </View>
+                    </View>
+                    <Footer buttonTitle={"Done"} buttonDisabled={false} functionToExecute={() => {navToHome(true)}}/>
                 </View>
-            </View>
-            <Footer buttonTitle={"Done"} functionToExecute={() => {}}/>
-        </View>
+            </SafeAreaView>
+        </>
     );
 };
 

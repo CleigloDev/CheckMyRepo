@@ -1,17 +1,29 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, Dimensions, Text, TouchableOpacity, SafeAreaView, StatusBar} from 'react-native';
 import Header from './Header';
 import Footer from './Footer';
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
-const Home = () => {
+const Home = ({navigation}) => {
     const [repoName, changeTextRepo] = useState("");
     const [userName, changeTextUsername] = useState("");
-    const [isAddUserVisible, changeVisibleUser] = useState(false);
-    const [isAddRepoVisible, changeVisibleRepo] = useState(false);
+    const [backgroundColor, setBackgroundColor] = useState("white");
+    const [checkButtonDisabled, setButtonEnabled] = useState(false);
+    const [error, setError] = useState("");
+
+    useEffect(() => {
+        var sRepoName = navigation.getParam("repoName", "NOREPO");
+        var sUsername = navigation.getParam("userName", "NOUSERNAME");
+
+        sRepoName !== "" && sRepoName !== "NOREPO" ? 
+            repoName !== sRepoName ? changeTextRepo(sRepoName) : null : null;
+        sUsername !== "" && sUsername !== "NOUSERNAME" ? 
+            userName !== sUsername ? changeTextUsername(sUsername) : null : null;
+    }, []);
 
     sendMessage = () => {
+        setButtonEnabled(true);
         fetch("https://pushmore.marc.io/webhook/qnUSj4NmQ2qdfzCPv4jM5ByZ", {
             method: "POST",
             headers: {
@@ -20,33 +32,47 @@ const Home = () => {
             body: JSON.stringify({repoUrl: `github.com/${userName}/${repoName}`, sender: "Carlo Lunetta"}),
         }).then(res => res.text()).then(textRes => {
             if (!(/Error/gmi.test(textRes))) {
-            alert("Yes, message has been sent");
+                setBackgroundColor("#caffda");
+                
+            }else{
+                setBackgroundColor("#ffacab");
+                setError("BADREQUEST");
+                setButtonEnabled(true);
             }
         }).catch(err => {
-            alert("Ops some error occured, please retry.");
+            setBackgroundColor("#ffacab");
+            setError("BADREQUEST");
+            setButtonEnabled(true);
         });
     };
 
-    showRepoPage = () => {
-        changeVisibleRepo(!isAddRepoVisible);
+    navToInsertGit = () => {
+        navigation.navigate('InsertGit', {
+            repoName,
+            userName
+        });
     };
 
-    showUserPage = () => {
-        changeVisibleUser(!isAddUserVisible);
+    navToUserName = () => {
+        navigation.navigate('UserName', {
+            repoName,
+            userName
+        });
     };
 
   return (
     <>
         <StatusBar barStyle="dark-content" />
-        <SafeAreaView style={{flex: 1}}>
-            <View style={styles.MainView}>
+        <SafeAreaView style={{flex: 1, ...{backgroundColor}}}>
+            <View style={{...styles.MainView, ...{backgroundColor}}}>
                 <Header headerTitle={"Set the repository address"} iconVisible={false}/>
                 <View style={styles.ViewContent}>
                     <View style={styles.flexNullView}/>
                     <View style={{...styles.flexContent, ...styles.flexDirectionColumn}}>
+                        <View style={styles.flexNullView}>
                         <Text style={styles.TextMain}>github.com</Text>
                         
-                        <TouchableOpacity onPress={() => {}}>
+                        <TouchableOpacity onPress={navToUserName}>
                             <View style={styles.flexDirectionRow}>
                                 <Text style={styles.TextMain}>/</Text>
                                 <Text style={styles.TextPlaceHolder}>
@@ -55,7 +81,7 @@ const Home = () => {
                             </View>
                         </TouchableOpacity>
 
-                        <TouchableOpacity onPress={() =>{}}>
+                        <TouchableOpacity onPress={navToInsertGit}>
                             <View style={styles.flexDirectionRow}>
                                 <Text style={styles.TextMain}>/</Text>
                                 <Text style={styles.TextPlaceHolder}>
@@ -63,10 +89,32 @@ const Home = () => {
                                 </Text>
                             </View>
                         </TouchableOpacity>
-
+                        </View>
+                        
+                        {error !== "" ?
+                            <View style={{...styles.flexDirectionColumn, ...{flex: 2.2}}}>
+                                <View style={styles.flexErrorView}>
+                                    <Text style={styles.textCheckYour}>Check your </Text>
+                                    <Text style={styles.textBoldError}>
+                                        {error === "INTERNET" ? "internet connection" : 
+                                            error === "BADREQUEST" ? "username" : ""}
+                                    </Text>
+                                </View>
+                                <View style={styles.flexErrorView}>
+                                    {error === "BADREQUEST" ? 
+                                        <>
+                                            <Text style={styles.textCheckYour}>or your </Text>
+                                            <Text style={styles.textBoldError}>repository </Text>
+                                            <Text style={styles.textCheckYour}>name</Text>
+                                        </> : null}
+                                </View>
+                            </View> : null}
                     </View>
                 </View>
-                <Footer buttonTitle={"Check"} functionToExecute={() => {}}/>
+                <Footer buttonTitle={"Check"} buttonDisabled={checkButtonDisabled}
+                 functionToExecute={
+                    repoName !== "" && userName !== "" ? sendMessage : 
+                    () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/>
             </View>
         </SafeAreaView>
     </>
@@ -89,6 +137,7 @@ var styles = StyleSheet.create({
     TextPlaceHolder: {
         fontSize: 40,
         fontFamily: 'OpenSans-Light',
+        color: 'gray'
     },
     flexDirectionRow: {
         flexDirection: 'row',
@@ -101,6 +150,17 @@ var styles = StyleSheet.create({
     },
     flexNullView: {
         flex: 0.7,
+    },
+    flexErrorView: {
+        flexDirection: 'row'
+    },
+    textCheckYour: {
+        fontSize: 23, 
+        fontFamily: 'OpenSans-Regular'
+    },
+    textBoldError: {
+        fontSize: 23, 
+        fontFamily: 'OpenSans-Bold'
     }
 });
 
