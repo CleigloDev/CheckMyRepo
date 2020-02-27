@@ -9,6 +9,7 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const Header = props => {
   return (
     <View style={styles.MinFlex}>
+        <View style={{flex: 0.3}}/>
         <View style={styles.MainViewStyle}>
             {props.iconVisible ? <View style={styles.MinFlex}>
                 <TouchableOpacity onPress={props.navBack}>
@@ -26,11 +27,9 @@ const Header = props => {
 
 var styles = StyleSheet.create({
     MainViewStyle: {
-        flexDirection: 'row', 
-        position: 'absolute', 
-        top: 15, 
-        left: 20,
-        alignItems: 'center'
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingLeft: 20
     },
     MinFlex:{
         flex: Math.abs((screenHeight*1)/896),

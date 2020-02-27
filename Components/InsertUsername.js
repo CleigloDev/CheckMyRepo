@@ -55,7 +55,7 @@ const InsertUsername = ({navigation}) => {
                         </View>
                     </View>
                 </View>
-                <Footer buttonTitle={"Done"} buttonDisabled={false} functionToExecute={() => {navToHome(true)}}/>
+                <Footer buttonTitle={"DONE"} buttonDisabled={false} functionToExecute={() => {navToHome(true)}}/>
             </SafeAreaView>
         </>
     );

@@ -129,7 +129,7 @@ const Home = ({navigation}) => {
                     </View>
                 </View>
             </View>
-            <Footer buttonTitle={"Check"} buttonDisabled={checkButtonDisabled}
+            <Footer buttonTitle={"CHECK"} buttonDisabled={checkButtonDisabled}
                  functionToExecute={
                     repoName !== "" && userName !== "" ? checkConnectionBeforeSend : 
                     () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/>

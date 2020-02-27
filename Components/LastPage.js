@@ -38,7 +38,7 @@ const LastPage = ({navigation}) => {
                     </View>
                     <View style={styles.nullViewBig}></View>
                 </View>
-                <Footer buttonTitle={"Cool"} buttonDisabled={false}
+                <Footer buttonTitle={"COOL"} buttonDisabled={false}
                         functionToExecute={() => {navToHome()}}/>
             </SafeAreaView>
         </>
