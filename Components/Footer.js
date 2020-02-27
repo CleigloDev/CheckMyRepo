@@ -1,5 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Dimensions} from 'react-native';
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const Footer = props => {
   return (
@@ -18,7 +20,7 @@ var styles = StyleSheet.create({
         right: 25,
     },
     TextStyle: {
-        fontSize: 25, 
+        fontSize: Math.abs((screenWidth*25)/414), 
         fontFamily: "OpenSans-Bold"
     }
 });

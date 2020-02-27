@@ -34,6 +34,7 @@ const Home = ({navigation}) => {
             body: JSON.stringify({repoUrl: `github.com/${userName}/${repoName}`, sender: "Carlo Lunetta"}),
         }).then(res => res.text()).then(textRes => {
             if (!(/Error/gmi.test(textRes))) {
+                setError("");
                 setBackgroundColor("#caffda");
                 
             }else{
@@ -51,7 +52,7 @@ const Home = ({navigation}) => {
     checkConnectionBeforeSend = () => {
         NetInfo.fetch().then(state => {
             if(state.isConnected){
-                this._sendMessage();
+                _sendMessage();
             }else{
                 setBackgroundColor("#ffacab");
                 setError("INTERNET");
@@ -144,11 +145,11 @@ var styles = StyleSheet.create({
         flexDirection: 'row',
     },
     TextMain: {
-        fontSize: 40,
+        fontSize: Math.abs((screenWidth*40)/414),
         fontFamily: 'OpenSans-Regular',
     },
     TextPlaceHolder: {
-        fontSize: 40,
+        fontSize: Math.abs((screenWidth*40)/414),
         fontFamily: 'OpenSans-Light',
         color: 'gray'
     },
@@ -168,11 +169,11 @@ var styles = StyleSheet.create({
         flexDirection: 'row'
     },
     textCheckYour: {
-        fontSize: 23, 
+        fontSize: Math.abs((screenWidth*23)/414), 
         fontFamily: 'OpenSans-Regular'
     },
     textBoldError: {
-        fontSize: 23, 
+        fontSize: Math.abs((screenWidth*23)/414), 
         fontFamily: 'OpenSans-Bold'
     }
 });

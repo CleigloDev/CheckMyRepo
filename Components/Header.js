@@ -1,8 +1,10 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Dimensions} from 'react-native';
 import { createIconSetFromFontello } from 'react-native-vector-icons';
 import fontelloConfig from '../config.json';
 const Icon = createIconSetFromFontello(fontelloConfig);
+
+const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const Header = props => {
   return (
@@ -37,7 +39,7 @@ var styles = StyleSheet.create({
         flex: 12,
     },
     TextStyle: {
-        fontSize: 25, 
+        fontSize: Math.abs((screenWidth*25)/414), 
         fontFamily: "OpenSans-Bold"
     }
 });

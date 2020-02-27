@@ -67,7 +67,7 @@ var styles = StyleSheet.create({
         flex: 7,
     },
     TextStyle: {
-        fontSize: 20,
+        fontSize: Math.abs((screenWidth*20)/414),
         fontFamily: 'OpenSans-Light',
     },
     ViewText: {
