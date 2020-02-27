@@ -8,6 +8,7 @@ import Footer from './Footer';
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const Home = ({navigation}) => {
+    const [footerTitle, setFooterTitle] = useState("CHECK");
     const [repoName, changeTextRepo] = useState("");
     const [userName, changeTextUsername] = useState("");
     const [backgroundColor, setBackgroundColor] = useState("white");
@@ -24,7 +25,7 @@ const Home = ({navigation}) => {
             userName !== sUsername ? changeTextUsername(sUsername) : null : null;
     }, []);
 
-    _sendMessage = () => {
+    sendMessage = () => {
         setButtonEnabled(true);
         fetch("https://pushmore.marc.io/webhook/qnUSj4NmQ2qdfzCPv4jM5ByZ", {
             method: "POST",
@@ -54,7 +55,10 @@ const Home = ({navigation}) => {
     checkConnectionBeforeSend = () => {
         NetInfo.fetch().then(state => {
             if(state.isConnected){
-                _sendMessage();
+                setError("");
+                setBackgroundColor("#caffda");
+                setFooterTitle("SEND");
+                //_sendMessage();
             }else{
                 setBackgroundColor("#ffacab");
                 setError("INTERNET");
@@ -124,15 +128,18 @@ const Home = ({navigation}) => {
                                 </View>
                             </View> : null}
                         </View>
-                        
-                        
                     </View>
                 </View>
             </View>
-            <Footer buttonTitle={"CHECK"} buttonDisabled={checkButtonDisabled}
-                 functionToExecute={
-                    repoName !== "" && userName !== "" ? checkConnectionBeforeSend : 
-                    () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/>
+            {footerTitle === "CHECK" ?
+                <Footer buttonTitle={footerTitle} buttonDisabled={checkButtonDisabled}
+                    functionToExecute={
+                        repoName !== "" && userName !== "" ? checkConnectionBeforeSend : 
+                        () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/> :
+                <Footer buttonTitle={footerTitle} buttonDisabled={checkButtonDisabled}
+                    functionToExecute={
+                        repoName !== "" && userName !== "" ? sendMessage : 
+                        () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/>}
         </SafeAreaView>
     </>
   );
