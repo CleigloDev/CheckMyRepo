@@ -31,9 +31,7 @@ const Home = ({navigation}) => {
             if(state.isConnected){
                 _sendMessage();
             }else{
-                setButtonEnabled(false);
-                setBackgroundColor("#ffacab");
-                setError("INTERNET");
+                _setErrorPage("INTERNET");
             }
         });
     };
@@ -50,16 +48,15 @@ const Home = ({navigation}) => {
                 setBackgroundColor("#caffda");
                 setFooterTitle("SEND");
             }else if(!state.isConnected){
-                setBackgroundColor("#ffacab");
-                setError("INTERNET");
+                _setErrorPage("INTERNET");
             }else{
-                setBackgroundColor("#ffacab");
-                setError("BADREQUEST");
+                _setErrorPage("BADREQUEST");
             }
         });
     };
 
     navToInsertGit = () => {
+        _clearErrorPage();
         navigation.navigate('InsertGit', {
             repoName,
             userName
@@ -67,6 +64,7 @@ const Home = ({navigation}) => {
     };
 
     navToUserName = () => {
+        _clearErrorPage();
         navigation.navigate('UserName', {
             repoName,
             userName
@@ -82,25 +80,31 @@ const Home = ({navigation}) => {
             body: JSON.stringify({repoUrl: `github.com/${userName}/${repoName}`, sender: "Carlo Lunetta"}),
         }).then(res => res.text()).then(textRes => {
             if (!(/Error/gmi.test(textRes))) {
-                setError("");
-                setBackgroundColor("white");
-                setFooterTitle("CHECK");
-                setButtonEnabled(false);
+                _clearErrorPage();
                 changeTextRepo("");
                 changeTextUsername("");
                 setTimeout(() => {
                     navigation.navigate('LastPage');
                 }, 50);
             }else{
-                setBackgroundColor("#ffacab");
-                setError("BADREQUEST");
-                setButtonEnabled(false);
+                _setErrorPage("BADREQUEST");
             }
         }).catch(err => {
-            setBackgroundColor("#ffacab");
-            setError("BADREQUEST");
-            setButtonEnabled(false);
+            _setErrorPage("BADREQUEST");
         });
+    };
+
+    _clearErrorPage = () => {
+        setError("");
+        setBackgroundColor("white");
+        setFooterTitle("CHECK");
+        setButtonEnabled(false);
+    };
+
+    _setErrorPage = (sErrorType) => {
+        setBackgroundColor("#ffacab");
+        setError(sErrorType);
+        setButtonEnabled(false);
     };
 
     _checkRepoExistence = () => {
