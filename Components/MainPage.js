@@ -41,7 +41,7 @@ const Home = ({navigation}) => {
     checkConnectionBeforeSend = () => {
         Promise.all([
             NetInfo.fetch(),
-            _checkRepoExistance()
+            _checkRepoExistence()
         ]).then(response => {
             var state = response[0];
             var checkRepo = response[1];
@@ -99,7 +99,7 @@ const Home = ({navigation}) => {
         });
     };
 
-    _checkRepoExistance = () => {
+    _checkRepoExistence = () => {
         return new Promise((resolve) => { 
             fetch(`https://github.com/${userName}/${repoName}`,{
                 method: "GET",
