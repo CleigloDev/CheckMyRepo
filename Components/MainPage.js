@@ -23,45 +23,38 @@ const Home = ({navigation}) => {
             repoName !== sRepoName ? changeTextRepo(sRepoName) : null : null;
         sUsername !== "" && sUsername !== "NOUSERNAME" ? 
             userName !== sUsername ? changeTextUsername(sUsername) : null : null;
-    }, []);
+    });
 
-    sendMessage = () => {
+    checkConnectionAndSend = () => {
         setButtonEnabled(true);
-        fetch("https://pushmore.marc.io/webhook/qnUSj4NmQ2qdfzCPv4jM5ByZ", {
-            method: "POST",
-            headers: {
-                'Content-Type': 'text/plain',
-            },
-            body: JSON.stringify({repoUrl: `github.com/${userName}/${repoName}`, sender: "Carlo Lunetta"}),
-        }).then(res => res.text()).then(textRes => {
-            if (!(/Error/gmi.test(textRes))) {
-                setError("");
-                setBackgroundColor("#caffda");
-                setTimeout(() => {
-                    navigation.navigate('LastPage');
-                }, 300);
+        NetInfo.fetch().then(state => {
+            if(state.isConnected){
+                _sendMessage();
             }else{
+                setButtonEnabled(false);
                 setBackgroundColor("#ffacab");
-                setError("BADREQUEST");
-                setButtonEnabled(true);
+                setError("INTERNET");
             }
-        }).catch(err => {
-            setBackgroundColor("#ffacab");
-            setError("BADREQUEST");
-            setButtonEnabled(true);
         });
     };
 
     checkConnectionBeforeSend = () => {
-        NetInfo.fetch().then(state => {
-            if(state.isConnected){
+        Promise.all([
+            NetInfo.fetch(),
+            _checkRepoExistance()
+        ]).then(response => {
+            var state = response[0];
+            var checkRepo = response[1];
+            if(state.isConnected && checkRepo === "OK"){
                 setError("");
                 setBackgroundColor("#caffda");
                 setFooterTitle("SEND");
-                //_sendMessage();
-            }else{
+            }else if(!state.isConnected){
                 setBackgroundColor("#ffacab");
                 setError("INTERNET");
+            }else{
+                setBackgroundColor("#ffacab");
+                setError("BADREQUEST");
             }
         });
     };
@@ -78,6 +71,82 @@ const Home = ({navigation}) => {
             repoName,
             userName
         });
+    };
+
+    _sendMessage = () => {
+        fetch("https://pushmore.marc.io/webhook/qnUSj4NmQ2qdfzCPv4jM5ByZ", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'text/plain',
+            },
+            body: JSON.stringify({repoUrl: `github.com/${userName}/${repoName}`, sender: "Carlo Lunetta"}),
+        }).then(res => res.text()).then(textRes => {
+            if (!(/Error/gmi.test(textRes))) {
+                setError("");
+                setBackgroundColor("#caffda");
+                setTimeout(() => {
+                    navigation.navigate('LastPage');
+                }, 300);
+            }else{
+                setBackgroundColor("#ffacab");
+                setError("BADREQUEST");
+                setButtonEnabled(false);
+            }
+        }).catch(err => {
+            setBackgroundColor("#ffacab");
+            setError("BADREQUEST");
+            setButtonEnabled(false);
+        });
+    };
+
+    _checkRepoExistance = () => {
+        return new Promise((resolve) => { 
+            fetch(`https://github.com/${userName}/${repoName}`,{
+                method: "GET",
+            }).then(res => {
+                if(res.status === 200){
+                    resolve("OK");
+                }else{
+                    resolve("ERROR");
+                }
+            })
+            .catch(err => {
+                resolve("ERROR");
+            });
+        });
+    };
+
+    _renderFooter = () => {
+        return (footerTitle === "CHECK" ?
+                <Footer buttonTitle={footerTitle} buttonDisabled={checkButtonDisabled}
+                    functionToExecute={
+                        repoName !== "" && userName !== "" ? checkConnectionBeforeSend : 
+                        () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/> :
+                <Footer buttonTitle={footerTitle} buttonDisabled={checkButtonDisabled}
+                    functionToExecute={
+                        repoName !== "" && userName !== "" ? checkConnectionAndSend : 
+                        () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/>);
+    };
+
+    _renderErrorMessages = () => {
+        return (error !== "" ?
+                <View style={{...styles.flexDirectionColumn, ...{flex: 2}}}>
+                    <View style={styles.flexErrorView}>
+                        <Text style={styles.textCheckYour}>Check your </Text>
+                        <Text style={styles.textBoldError}>
+                            {error === "INTERNET" ? "internet connection" : 
+                                error === "BADREQUEST" ? "username" : ""}
+                        </Text>
+                    </View>
+                    <View style={styles.flexErrorView}>
+                        {error === "BADREQUEST" ? 
+                            <>
+                                <Text style={styles.textCheckYour}>or your </Text>
+                                <Text style={styles.textBoldError}>repository </Text>
+                                <Text style={styles.textCheckYour}>name</Text>
+                            </> : null}
+                    </View>
+                </View> : null);
     };
 
   return (
@@ -109,37 +178,12 @@ const Home = ({navigation}) => {
                                     </Text>
                                 </View>
                             </TouchableOpacity>
-                            {error !== "" ?
-                            <View style={{...styles.flexDirectionColumn, ...{flex: 2}}}>
-                                <View style={styles.flexErrorView}>
-                                    <Text style={styles.textCheckYour}>Check your </Text>
-                                    <Text style={styles.textBoldError}>
-                                        {error === "INTERNET" ? "internet connection" : 
-                                            error === "BADREQUEST" ? "username" : ""}
-                                    </Text>
-                                </View>
-                                <View style={styles.flexErrorView}>
-                                    {error === "BADREQUEST" ? 
-                                        <>
-                                            <Text style={styles.textCheckYour}>or your </Text>
-                                            <Text style={styles.textBoldError}>repository </Text>
-                                            <Text style={styles.textCheckYour}>name</Text>
-                                        </> : null}
-                                </View>
-                            </View> : null}
+                            {_renderErrorMessages()}
                         </View>
                     </View>
                 </View>
             </View>
-            {footerTitle === "CHECK" ?
-                <Footer buttonTitle={footerTitle} buttonDisabled={checkButtonDisabled}
-                    functionToExecute={
-                        repoName !== "" && userName !== "" ? checkConnectionBeforeSend : 
-                        () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/> :
-                <Footer buttonTitle={footerTitle} buttonDisabled={checkButtonDisabled}
-                    functionToExecute={
-                        repoName !== "" && userName !== "" ? sendMessage : 
-                        () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/>}
+            {_renderFooter()}
         </SafeAreaView>
     </>
   );

@@ -1,29 +1,13 @@
-import React, {useEffect} from 'react';
-import { StackActions, NavigationActions} from 'react-navigation';
-import {View, StyleSheet, Text, Dimensions, SafeAreaView, StatusBar, BackHandler} from 'react-native';
+import React from 'react';
+import {View, StyleSheet, Text, Dimensions, SafeAreaView, StatusBar} from 'react-native';
 import Footer from "./Footer";
 
 const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const LastPage = ({navigation}) => {
 
-    handleHardwareBack = () => {
-        navToHome();
-        return true;
-    };
-
-    useEffect(() => {
-        this.backHandler = BackHandler.addEventListener('hardwareBackPress', handleHardwareBack);
-    }, []);
-
     navToHome = () => {
-        var oNavigationParm = { routeName: 'Home'};
-        const resetHomeScreen = StackActions.reset({
-            index: 0,
-            actions: [NavigationActions.navigate(oNavigationParm)],
-        });
-        this.backHandler && this.backHandler.remove ? this.backHandler.remove() : null;
-        navigation.dispatch(resetHomeScreen);
+        navigation.navigate('Home');
     };
 
     return (
