@@ -16,14 +16,19 @@ const Home = ({navigation}) => {
     const [error, setError] = useState("");
 
     useEffect(() => {
+        setError("");
+        setBackgroundColor("white");
+        setFooterTitle("CHECK");
+        setButtonEnabled(false);
+
         var sRepoName = navigation.getParam("repoName", "NOREPO");
         var sUsername = navigation.getParam("userName", "NOUSERNAME");
 
         sRepoName !== "" && sRepoName !== "NOREPO" ? 
-            repoName !== sRepoName ? changeTextRepo(sRepoName) : null : null;
+            repoName !== sRepoName ? changeTextRepo(sRepoName) : null : changeTextRepo("");
         sUsername !== "" && sUsername !== "NOUSERNAME" ? 
-            userName !== sUsername ? changeTextUsername(sUsername) : null : null;
-    });
+            userName !== sUsername ? changeTextUsername(sUsername) : null : changeTextUsername("");
+    }, [navigation]);
 
     checkConnectionAndSend = () => {
         setButtonEnabled(true);
@@ -130,7 +135,7 @@ const Home = ({navigation}) => {
 
     _renderErrorMessages = () => {
         return (error !== "" ?
-                <View style={{...styles.flexDirectionColumn, ...{flex: 2}}}>
+                <View style={{...styles.flexDirectionColumn, ...{flex: 2, paddingTop: "5%"}}}>
                     <View style={styles.flexErrorView}>
                         <Text style={styles.textCheckYour}>Check your </Text>
                         <Text style={styles.textBoldError}>
@@ -156,7 +161,6 @@ const Home = ({navigation}) => {
             <View style={{...styles.MainView, ...{backgroundColor}}}>
                 <Header headerTitle={"Set the repository address"} iconVisible={false}/>
                 <View style={styles.ViewContent}>
-                    <View style={styles.flexNullView}/>
                     <View style={{...styles.flexContent, ...styles.flexDirectionColumn}}>
                         <View style={styles.flexGitInfoView}>
                             <Text style={styles.TextMain}>github.com</Text>
@@ -214,10 +218,8 @@ var styles = StyleSheet.create({
         flexDirection: 'column',
     },
     flexContent: {
+        paddingLeft: "8%",
         flex: 10
-    },
-    flexNullView: {
-        flex: 0.7
     },
     flexGitInfoView: {
         flex: 0.7

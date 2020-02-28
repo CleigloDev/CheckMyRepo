@@ -7,7 +7,10 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 const LastPage = ({navigation}) => {
 
     navToHome = () => {
-        navigation.navigate('Home');
+        navigation.navigate('Home', {
+            repoName: "",
+            userName: ""
+        });
     };
 
     return (
@@ -15,12 +18,10 @@ const LastPage = ({navigation}) => {
             <StatusBar barStyle="dark-content" />
             <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
                 <View style={styles.ViewStyle}>
-                    <View style={styles.nullViewSmall}></View>
                     <View style={styles.ViewTextStyle}>
                         <Text style={styles.TextStyle}>All done!</Text>
                         <Text style={styles.TextStyle}>Repository sent.</Text>
                     </View>
-                    <View style={styles.nullViewBig}></View>
                 </View>
                 <Footer buttonTitle={"COOL"} buttonDisabled={false}
                         functionToExecute={() => {navToHome()}}/>
@@ -39,14 +40,9 @@ var styles = StyleSheet.create({
         fontFamily: "OpenSans-Bold"
     },
     ViewTextStyle: {
+        paddingTop: "35%",
         flex: 2,
         alignItems: 'center'
-    },
-    nullViewSmall: {
-        flex: 2
-    },
-    nullViewBig: {
-        flex: 10
     }
 });
 
