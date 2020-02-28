@@ -139,58 +139,66 @@ const Home = ({navigation}) => {
                     <View style={styles.flexErrorView}>
                         <Text style={styles.textCheckYour}>Check your </Text>
                         <Text style={styles.textBoldError}>
-                            {error === "INTERNET" ? "internet connection" : 
-                                error === "BADREQUEST" ? "username" : ""}
+                            {_returnErrorMessage()}
                         </Text>
                     </View>
                     <View style={styles.flexErrorView}>
-                        {error === "BADREQUEST" ? 
-                            <>
-                                <Text style={styles.textCheckYour}>or your </Text>
-                                <Text style={styles.textBoldError}>repository </Text>
-                                <Text style={styles.textCheckYour}>name</Text>
-                            </> : null}
+                        {_returnExtraErrorText()}
                     </View>
                 </View> : null);
     };
 
-  return (
-    <>
-        <StatusBar barStyle="dark-content" />
-        <SafeAreaView style={{flex: 1, ...{backgroundColor}}}>
-            <View style={{...styles.MainView, ...{backgroundColor}}}>
-                <Header headerTitle={"Set the repository address"} iconVisible={false}/>
-                <View style={styles.ViewContent}>
-                    <View style={{...styles.flexContent, ...styles.flexDirectionColumn}}>
-                        <View style={styles.flexGitInfoView}>
-                            <Text style={styles.TextMain}>github.com</Text>
-                            
-                            <TouchableOpacity onPress={navToUserName}>
-                                <View style={styles.flexDirectionRow}>
-                                    <Text style={styles.TextMain}>/</Text>
-                                    <Text style={styles.TextPlaceHolder}>
-                                        {userName !== "" ? userName : "user"}
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
+    _returnErrorMessage = () => {
+        return (error === "INTERNET" ? "internet connection" : 
+                error === "BADREQUEST" ? "username" : "");
+    };
 
-                            <TouchableOpacity onPress={navToInsertGit}>
-                                <View style={styles.flexDirectionRow}>
-                                    <Text style={styles.TextMain}>/</Text>
-                                    <Text style={styles.TextPlaceHolder}>
-                                        {repoName !== "" ? repoName : "repo"}
-                                    </Text>
-                                </View>
-                            </TouchableOpacity>
-                            {_renderErrorMessages()}
+    _returnExtraErrorText = () => {
+        return (error === "BADREQUEST" ? 
+                    <>
+                        <Text style={styles.textCheckYour}>or your </Text>
+                        <Text style={styles.textBoldError}>repository </Text>
+                        <Text style={styles.textCheckYour}>name</Text>
+                    </> : null);
+    };
+
+    return (
+        <>
+            <StatusBar barStyle="dark-content" />
+            <SafeAreaView style={{flex: 1, ...{backgroundColor}}}>
+                <View style={{...styles.MainView, ...{backgroundColor}}}>
+                    <Header headerTitle={"Set the repository address"} iconVisible={false}/>
+                    <View style={styles.ViewContent}>
+                        <View style={{...styles.flexContent, ...styles.flexDirectionColumn}}>
+                            <View style={styles.flexGitInfoView}>
+                                <Text style={styles.TextMain}>github.com</Text>
+                                
+                                <TouchableOpacity onPress={navToUserName}>
+                                    <View style={styles.flexDirectionRow}>
+                                        <Text style={styles.TextMain}>/</Text>
+                                        <Text style={styles.TextPlaceHolder}>
+                                            {userName !== "" ? userName : "user"}
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity onPress={navToInsertGit}>
+                                    <View style={styles.flexDirectionRow}>
+                                        <Text style={styles.TextMain}>/</Text>
+                                        <Text style={styles.TextPlaceHolder}>
+                                            {repoName !== "" ? repoName : "repo"}
+                                        </Text>
+                                    </View>
+                                </TouchableOpacity>
+                                {_renderErrorMessages()}
+                            </View>
                         </View>
                     </View>
                 </View>
-            </View>
-            {_renderFooter()}
-        </SafeAreaView>
-    </>
-  );
+                {_renderFooter()}
+            </SafeAreaView>
+        </>
+    );
 };
 
 var styles = StyleSheet.create({
