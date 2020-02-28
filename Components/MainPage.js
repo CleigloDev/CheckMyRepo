@@ -110,7 +110,7 @@ const Home = ({navigation}) => {
                                 </View>
                             </TouchableOpacity>
                             {error !== "" ?
-                            <View style={{...styles.flexDirectionColumn, ...{flex: Math.abs((screenHeight*2)/896)}}}>
+                            <View style={{...styles.flexDirectionColumn, ...{flex: 2}}}>
                                 <View style={styles.flexErrorView}>
                                     <Text style={styles.textCheckYour}>Check your </Text>
                                     <Text style={styles.textBoldError}>
@@ -148,10 +148,10 @@ const Home = ({navigation}) => {
 var styles = StyleSheet.create({
     MainView: {
         flexDirection: 'column',
-        flex: Math.abs((screenHeight*1)/896),
+        flex: 1
     },
     ViewContent: {
-        flex: Math.abs((screenHeight*7)/896),
+        flex: 7,
         flexDirection: 'row',
     },
     TextMain: {
@@ -170,13 +170,13 @@ var styles = StyleSheet.create({
         flexDirection: 'column',
     },
     flexContent: {
-        flex: Math.abs((screenHeight*10)/896),
+        flex: 10
     },
     flexNullView: {
-        flex: Math.abs((screenHeight*0.7)/896),
+        flex: 0.7
     },
     flexGitInfoView: {
-        flex: Math.abs((screenHeight*0.7)/896),
+        flex: 0.7
     },
     flexErrorView: {
         flexDirection: 'row'

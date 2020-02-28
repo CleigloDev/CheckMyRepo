@@ -32,10 +32,10 @@ var styles = StyleSheet.create({
         paddingLeft: 20
     },
     MinFlex:{
-        flex: Math.abs((screenHeight*1)/896),
+        flex: 1
     },
     MaxFlex: {
-        flex: Math.abs((screenHeight*12)/896),
+        flex: 12
     },
     TextStyle: {
         fontSize: Math.abs((screenWidth*25)/414), 

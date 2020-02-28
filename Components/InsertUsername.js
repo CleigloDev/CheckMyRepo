@@ -64,10 +64,10 @@ const InsertUsername = ({navigation}) => {
 var styles = StyleSheet.create({
     MainView: {
         flexDirection: 'column',
-        flex: Math.abs((screenHeight*1)/896),
+        flex: 1
     },
     flex7: {
-        flex: Math.abs((screenHeight*7)/896),
+        flex: 7
     },
     TextStyle: {
         fontSize: Math.abs((screenWidth*20)/414),

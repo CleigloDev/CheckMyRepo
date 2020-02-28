@@ -47,7 +47,7 @@ const LastPage = ({navigation}) => {
 
 var styles = StyleSheet.create({
     ViewStyle: {
-        flex: Math.abs((screenHeight*1)/896), 
+        flex: 1,
         alignItems: 'center'
     },
     TextStyle: {
@@ -55,14 +55,14 @@ var styles = StyleSheet.create({
         fontFamily: "OpenSans-Bold"
     },
     ViewTextStyle: {
-        flex: Math.abs((screenHeight*2)/896), 
+        flex: 2,
         alignItems: 'center'
     },
     nullViewSmall: {
-        flex: Math.abs((screenHeight*2)/896)
+        flex: 2
     },
     nullViewBig: {
-        flex: Math.abs((screenHeight*10)/896)
+        flex: 10
     }
 });
 
