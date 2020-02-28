@@ -16,11 +16,6 @@ const Home = ({navigation}) => {
     const [error, setError] = useState("");
 
     useEffect(() => {
-        setError("");
-        setBackgroundColor("white");
-        setFooterTitle("CHECK");
-        setButtonEnabled(false);
-
         var sRepoName = navigation.getParam("repoName", "NOREPO");
         var sUsername = navigation.getParam("userName", "NOUSERNAME");
 
@@ -88,10 +83,14 @@ const Home = ({navigation}) => {
         }).then(res => res.text()).then(textRes => {
             if (!(/Error/gmi.test(textRes))) {
                 setError("");
-                setBackgroundColor("#caffda");
+                setBackgroundColor("white");
+                setFooterTitle("CHECK");
+                setButtonEnabled(false);
+                changeTextRepo("");
+                changeTextUsername("");
                 setTimeout(() => {
                     navigation.navigate('LastPage');
-                }, 300);
+                }, 50);
             }else{
                 setBackgroundColor("#ffacab");
                 setError("BADREQUEST");
