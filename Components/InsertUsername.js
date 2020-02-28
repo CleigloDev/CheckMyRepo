@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, TextInput, Dimensions, SafeAreaView, StatusBar} from 'react-native';
 import Header from './Header';
 import Footer from './Footer';
@@ -7,6 +7,11 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const InsertUsername = ({navigation}) => {
     const [tempUserName, setTempUsername] = useState("");
+
+    useEffect(() => {
+        var userName = navigation.getParam("userName", "");
+        setTempUsername(userName);
+    }, []);
 
     navToHome = () => {
         navigation.navigate('Home', {
@@ -30,10 +35,7 @@ const InsertUsername = ({navigation}) => {
                         <View style={styles.ViewText}>
                             <TextInput style={styles.TextStyle} 
                                 autoFocus={true}
-                                value={
-                                    tempUserName === "" ? 
-                                    navigation.getParam("userName", "") : tempUserName
-                                }
+                                value={tempUserName}
                                 onSubmitEditing={() => {navToHome()}}
                                 onChangeText={text => setTempUsername(text)}
                                 placeholder={"Type your github username"}></TextInput>

@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, StyleSheet, TextInput, Dimensions, SafeAreaView, StatusBar} from 'react-native';
 import Header from './Header';
 import Footer from './Footer';
@@ -7,6 +7,11 @@ const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
 
 const InsertGitRepo = ({navigation}) => {
     const [tempRepoName, setTempRepoName] = useState("");
+
+    useEffect(() => {
+        var repoName = navigation.getParam("repoName", "");
+        setTempRepoName(repoName);
+    }, []);
 
     navToHome = () => {
         navigation.navigate('Home', {
@@ -30,10 +35,7 @@ const InsertGitRepo = ({navigation}) => {
                         <View style={styles.ViewText}>
                             <TextInput style={styles.TextStyle}
                                 autoFocus={true}
-                                value={
-                                    tempRepoName === "" ? 
-                                    navigation.getParam("repoName", "") : tempRepoName
-                                }
+                                value={tempRepoName}
                                 onSubmitEditing={() => {navToHome()}}
                                 onChangeText={text => setTempRepoName(text)}
                                 placeholder={"Type your github username"}></TextInput>
