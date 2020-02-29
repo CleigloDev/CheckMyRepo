@@ -1,7 +1,6 @@
 import React from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, Dimensions, Image} from 'react-native';
-
-const { width: screenWidth } = Dimensions.get('window');
+import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
+import fontSize from '../Modules/fontSize';
 
 const Header = props => {
 
@@ -44,7 +43,7 @@ var styles = StyleSheet.create({
         flex: 1
     },
     TextStyle: {
-        fontSize: Math.abs((screenWidth*25)/414), 
+        fontSize: fontSize(25), 
         fontFamily: "OpenSans-Bold"
     },
     IconDimension: {

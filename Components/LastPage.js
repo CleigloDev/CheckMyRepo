@@ -1,8 +1,7 @@
 import React from 'react';
-import {View, StyleSheet, Text, Dimensions, SafeAreaView, StatusBar} from 'react-native';
+import {View, StyleSheet, Text, SafeAreaView, StatusBar} from 'react-native';
+import fontSize from '../Modules/fontSize';
 import Footer from "./Footer";
-
-const { width: screenWidth } = Dimensions.get('window');
 
 const LastPage = ({navigation}) => {
 
@@ -36,7 +35,7 @@ var styles = StyleSheet.create({
         alignItems: 'center'
     },
     TextStyle: {
-        fontSize: Math.abs((screenWidth*45)/414), 
+        fontSize: fontSize(45), 
         fontFamily: "OpenSans-Bold"
     },
     ViewTextStyle: {

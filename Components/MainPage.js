@@ -1,11 +1,10 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Dimensions, Text, TouchableOpacity, SafeAreaView, StatusBar} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, StatusBar} from 'react-native';
+import fontSize from '../Modules/fontSize';
 import NetInfo from "@react-native-community/netinfo";
 
 import Header from './Header';
 import Footer from './Footer';
-
-const { width: screenWidth } = Dimensions.get('window');
 
 const Home = ({navigation}) => {
     const [footerTitle, setFooterTitle] = useState("CHECK");
@@ -220,11 +219,11 @@ var styles = StyleSheet.create({
         flexDirection: 'row',
     },
     TextMain: {
-        fontSize: Math.abs((screenWidth*40)/414),
+        fontSize: fontSize(40),
         fontFamily: 'OpenSans-Regular',
     },
     TextPlaceHolder: {
-        fontSize: Math.abs((screenWidth*40)/414),
+        fontSize: fontSize(40),
         fontFamily: 'OpenSans-Light',
         color: 'gray'
     },
@@ -245,11 +244,11 @@ var styles = StyleSheet.create({
         flexDirection: 'row'
     },
     textCheckYour: {
-        fontSize: Math.abs((screenWidth*23)/414), 
+        fontSize: fontSize(23), 
         fontFamily: 'OpenSans-Regular'
     },
     textBoldError: {
-        fontSize: Math.abs((screenWidth*23)/414), 
+        fontSize: fontSize(23), 
         fontFamily: 'OpenSans-Bold'
     }
 });

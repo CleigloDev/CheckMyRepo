@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, TextInput, Dimensions, SafeAreaView, StatusBar} from 'react-native';
+import {View, StyleSheet, TextInput, SafeAreaView, StatusBar, Dimensions} from 'react-native';
+
+import fontSize from '../Modules/fontSize';
 import Header from './Header';
 import Footer from './Footer';
 
@@ -57,7 +59,7 @@ var styles = StyleSheet.create({
         flex: 7
     },
     TextStyle: {
-        fontSize: Math.abs((screenWidth*20)/414),
+        fontSize: fontSize(20),
         fontFamily: 'OpenSans-Light',
     },
     ViewText: {
