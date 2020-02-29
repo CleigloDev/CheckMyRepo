@@ -3,7 +3,7 @@ import {View, StyleSheet, TextInput, Dimensions, SafeAreaView, StatusBar} from '
 import Header from './Header';
 import Footer from './Footer';
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 const InsertGitRepo = ({navigation}) => {
     const [tempRepoName, setTempRepoName] = useState("");

@@ -2,7 +2,7 @@ import React from 'react';
 import {View, StyleSheet, Text, Dimensions, SafeAreaView, StatusBar} from 'react-native';
 import Footer from "./Footer";
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 const LastPage = ({navigation}) => {
 

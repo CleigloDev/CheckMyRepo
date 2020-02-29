@@ -5,7 +5,7 @@ import NetInfo from "@react-native-community/netinfo";
 import Header from './Header';
 import Footer from './Footer';
 
-const { width: screenWidth, height: screenHeight } = Dimensions.get('window');
+const { width: screenWidth } = Dimensions.get('window');
 
 const Home = ({navigation}) => {
     const [footerTitle, setFooterTitle] = useState("CHECK");
@@ -127,13 +127,19 @@ const Home = ({navigation}) => {
     _renderFooter = () => {
         return (footerTitle === "CHECK" ?
                 <Footer buttonTitle={footerTitle} buttonDisabled={checkButtonDisabled}
-                    functionToExecute={
-                        repoName !== "" && userName !== "" ? checkConnectionBeforeSend : 
-                        () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/> :
+                    functionToExecute={_returnFnCheckBeforeSend()}/> :
                 <Footer buttonTitle={footerTitle} buttonDisabled={checkButtonDisabled}
-                    functionToExecute={
-                        repoName !== "" && userName !== "" ? checkConnectionAndSend : 
-                        () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))}}/>);
+                    functionToExecute={_returnFnSend()}/>);
+    };
+
+    _returnFnCheckBeforeSend = () => {
+        return (repoName !== "" && userName !== "" ? checkConnectionBeforeSend : 
+            () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))});
+    };
+
+    _returnFnSend = () => {
+        return (repoName !== "" && userName !== "" ? checkConnectionAndSend : 
+            () => {(setBackgroundColor("#ffacab"), setError("BADREQUEST"))});
     };
 
     _renderErrorMessages = () => {
