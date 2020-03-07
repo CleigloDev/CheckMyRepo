@@ -10,32 +10,28 @@ const AppRouter = createStackNavigator({
   Home: {
     screen: MainPage,
     navigationOptions: ({ navigation }) => ({
-      headerMode: "none",
-      header: null
+      headerShown:false,
     }),
   },
   UserName: {
     screen: InsertUsername,
     navigationOptions: ({ navigation }) => ({
-      headerMode: "none",
-      header: null
+      headerShown:false,
     }),
   },
   InsertGit: {
     screen: InsertGit,
     navigationOptions: ({ navigation }) => ({
-      headerMode: "none",
-      header: null
+      headerShown:false,
     }),
   },
   LastPage: {
     screen: LastPage,
     navigationOptions: ({ navigation }) => ({
-      headerMode: "none",
-      header: null
+      headerShown:false
     }),
   },
-  initialRouteName: "LastPage",
+  initialRouteName: "Home",
 });
 
 const AppContainer = createAppContainer(AppRouter);
