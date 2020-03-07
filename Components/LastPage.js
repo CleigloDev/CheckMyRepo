@@ -6,10 +6,7 @@ import Footer from "./Footer";
 const LastPage = ({navigation}) => {
 
     navToHome = () => {
-        navigation.navigate('Home', {
-            repoName: "",
-            userName: ""
-        });
+        navigation.navigate('Home');
     };
 
     return (

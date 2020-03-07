@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, StatusBar} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, SafeAreaView, StatusBar, ActivityIndicator} from 'react-native';
 import fontSize from '../Modules/fontSize';
 import NetInfo from "@react-native-community/netinfo";
 
@@ -13,16 +13,7 @@ const Home = ({navigation}) => {
     const [backgroundColor, setBackgroundColor] = useState("white");
     const [checkButtonDisabled, setButtonEnabled] = useState(false);
     const [error, setError] = useState("");
-
-    useEffect(() => {
-        var sRepoName = navigation.getParam("repoName", "NOREPO");
-        var sUsername = navigation.getParam("userName", "NOUSERNAME");
-
-        sRepoName !== "" && sRepoName !== "NOREPO" ? 
-            repoName !== sRepoName ? changeTextRepo(sRepoName) : null : changeTextRepo("");
-        sUsername !== "" && sUsername !== "NOUSERNAME" ? 
-            userName !== sUsername ? changeTextUsername(sUsername) : null : changeTextUsername("");
-    }, [navigation]);
+    const [showBusy, setShowBusy] = useState(false);
 
     checkConnectionAndSend = () => {
         setButtonEnabled(true);
@@ -36,6 +27,7 @@ const Home = ({navigation}) => {
     };
 
     checkConnectionBeforeSend = () => {
+        setShowBusy(true);
         Promise.all([
             NetInfo.fetch(),
             _checkRepoExistence()
@@ -51,6 +43,7 @@ const Home = ({navigation}) => {
             }else{
                 _setErrorPage("BADREQUEST");
             }
+            setShowBusy(false);
         });
     };
 
@@ -58,19 +51,20 @@ const Home = ({navigation}) => {
         _clearErrorPage();
         navigation.navigate('InsertGit', {
             repoName,
-            userName
+            changeTextRepo: changeTextRepo.bind(this)
         });
     };
 
     navToUserName = () => {
         _clearErrorPage();
         navigation.navigate('UserName', {
-            repoName,
-            userName
+            userName,
+            changeTextUsername: changeTextUsername.bind(this)
         });
     };
 
     _sendMessage = () => {
+        setShowBusy(true);
         fetch("https://pushmore.marc.io/webhook/qnUSj4NmQ2qdfzCPv4jM5ByZ", {
             method: "POST",
             headers: {
@@ -82,13 +76,16 @@ const Home = ({navigation}) => {
                 _clearErrorPage();
                 changeTextRepo("");
                 changeTextUsername("");
+                setShowBusy(false);
                 setTimeout(() => {
                     navigation.navigate('LastPage');
                 }, 50);
             }else{
+                setShowBusy(false);
                 _setErrorPage("BADREQUEST");
             }
         }).catch(err => {
+            setShowBusy(false);
             _setErrorPage("BADREQUEST");
         });
     };
@@ -198,6 +195,11 @@ const Home = ({navigation}) => {
                     {_renderErrorMessages()}
                 </View>
                 {_renderFooter()}
+                {showBusy &&
+                    <View style={styles.busyIndicator}>
+                        <ActivityIndicator animating={showBusy} size="large"/>
+                        <Text>Loading..</Text>
+                    </View>}
             </SafeAreaView>
         </>
     );
@@ -241,6 +243,18 @@ var styles = StyleSheet.create({
     textBoldError: {
         fontSize: fontSize(23), 
         fontFamily: 'OpenSans-Bold'
+    },
+    busyIndicator:{
+        flex: 1,
+        backgroundColor: "white",
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        zIndex: 1,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 });
 

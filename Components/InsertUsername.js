@@ -9,10 +9,9 @@ const InsertUsername = ({navigation}) => {
     const [tempUserName, setTempUsername] = useState(navigation.getParam("userName", ""));
 
     navToHome = () => {
-        navigation.navigate('Home', {
-            userName: tempUserName,
-            repoName: navigation.getParam("repoName", ""),
-        });
+        const setUserName = navigation.getParam("changeTextUsername", "");
+        typeof setUserName === "function" ? setUserName(tempUserName) : null;
+        navBack();
     };
 
     navBack = () => {

@@ -9,10 +9,9 @@ const InsertGitRepo = ({navigation}) => {
     const [tempRepoName, setTempRepoName] = useState(navigation.getParam("repoName", ""));
 
     navToHome = () => {
-        navigation.navigate('Home', {
-            repoName: tempRepoName,
-            userName: navigation.getParam("userName", ""),
-        });
+        const setRepoName = navigation.getParam("changeTextRepo", "");
+        typeof setRepoName === "function" ? setRepoName(tempRepoName) : null;
+        navBack();
     };
 
     navBack = () => {
