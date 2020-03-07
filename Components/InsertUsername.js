@@ -1,19 +1,12 @@
-import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, TextInput, SafeAreaView, StatusBar, Dimensions} from 'react-native';
+import React, {useState} from 'react';
+import {View, StyleSheet, TextInput, SafeAreaView, StatusBar} from 'react-native';
 
 import fontSize from '../Modules/fontSize';
 import Header from './Header';
 import Footer from './Footer';
 
-const { width: screenWidth } = Dimensions.get('window');
-
 const InsertUsername = ({navigation}) => {
-    const [tempUserName, setTempUsername] = useState("");
-
-    useEffect(() => {
-        var userName = navigation.getParam("userName", "");
-        setTempUsername(userName);
-    }, []);
+    const [tempUserName, setTempUsername] = useState(navigation.getParam("userName", ""));
 
     navToHome = () => {
         navigation.navigate('Home', {
@@ -33,15 +26,13 @@ const InsertUsername = ({navigation}) => {
                 <View style={styles.MainView}>
                     <Header headerTitle={"User"} iconVisible={true} 
                         navBack={() => {navToHome(false)}}/>
-                    <View style={styles.flex7}>
-                        <View style={styles.ViewText}>
-                            <TextInput style={styles.TextStyle} 
-                                autoFocus={true}
-                                value={tempUserName}
-                                onSubmitEditing={() => {navToHome()}}
-                                onChangeText={text => setTempUsername(text)}
-                                placeholder={"Type your github username"}></TextInput>
-                        </View>
+                    <View style={styles.ViewText}>
+                        <TextInput style={styles.TextStyle} 
+                            autoFocus={true}
+                            value={tempUserName}
+                            onSubmitEditing={() => {navToHome()}}
+                            onChangeText={text => setTempUsername(text)}
+                            placeholder={"Type your github username"}></TextInput>
                     </View>
                 </View>
                 <Footer buttonTitle={"DONE"} buttonDisabled={false} functionToExecute={() => {navToHome()}}/>
@@ -55,19 +46,16 @@ var styles = StyleSheet.create({
         flexDirection: 'column',
         flex: 1
     },
-    flex7: {
-        flex: 7
-    },
     TextStyle: {
+        width: 300,
+        borderBottomWidth: 3, 
+        borderBottomColor: 'black',
         fontSize: fontSize(20),
-        fontFamily: 'OpenSans-Light',
+        fontFamily: 'OpenSans-Light'
     },
     ViewText: {
-        position: 'absolute', 
-        left: 40, 
-        width: (screenWidth-(screenWidth*0.20)),
-        borderBottomWidth: 3, 
-        borderBottomColor: 'black'
+        flex: 7,
+        paddingLeft: 40
     }
 });
 
