@@ -15,12 +15,10 @@ const LastPage = ({navigation}) => {
     return (
         <>
             <StatusBar barStyle="dark-content" />
-            <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-                <View style={styles.ViewStyle}>
-                    <View style={styles.ViewTextStyle}>
-                        <Text style={styles.TextStyle}>All done!</Text>
-                        <Text style={styles.TextStyle}>Repository sent.</Text>
-                    </View>
+            <SafeAreaView style={{...styles.ViewStyle, backgroundColor: 'white'}}>
+                <View style={styles.ViewTextStyle}>
+                    <Text style={styles.TextStyle}>All done!</Text>
+                    <Text style={styles.TextStyle}>Repository sent.</Text>
                 </View>
                 <Footer buttonTitle={"COOL"} buttonDisabled={false}
                         functionToExecute={() => {navToHome()}}/>

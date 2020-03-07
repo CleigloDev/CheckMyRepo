@@ -22,18 +22,16 @@ const InsertUsername = ({navigation}) => {
     return (
         <>
             <StatusBar barStyle="dark-content" />
-            <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-                <View style={styles.MainView}>
-                    <Header headerTitle={"User"} iconVisible={true} 
-                        navBack={() => {navToHome(false)}}/>
-                    <View style={styles.ViewText}>
-                        <TextInput style={styles.TextStyle} 
-                            autoFocus={true}
-                            value={tempUserName}
-                            onSubmitEditing={() => {navToHome()}}
-                            onChangeText={text => setTempUsername(text)}
-                            placeholder={"Type your github username"}></TextInput>
-                    </View>
+            <SafeAreaView style={{...styles.MainView, backgroundColor: 'white'}}>
+                <Header headerTitle={"User"} iconVisible={true} 
+                    navBack={() => {navBack()}}/>
+                <View style={styles.ViewText}>
+                    <TextInput style={styles.TextStyle} 
+                        autoFocus={true}
+                        value={tempUserName}
+                        onSubmitEditing={() => {navToHome()}}
+                        onChangeText={text => setTempUsername(text)}
+                        placeholder={"Type your github username"}></TextInput>
                 </View>
                 <Footer buttonTitle={"DONE"} buttonDisabled={false} functionToExecute={() => {navToHome()}}/>
             </SafeAreaView>
@@ -47,7 +45,7 @@ var styles = StyleSheet.create({
         flex: 1
     },
     TextStyle: {
-        width: 300,
+        width: "85%",
         borderBottomWidth: 3, 
         borderBottomColor: 'black',
         fontSize: fontSize(20),

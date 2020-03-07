@@ -173,35 +173,29 @@ const Home = ({navigation}) => {
     return (
         <>
             <StatusBar barStyle="dark-content" />
-            <SafeAreaView style={{flex: 1, ...{backgroundColor}}}>
-                <View style={{...styles.MainView, ...{backgroundColor}}}>
-                    <Header headerTitle={"Set the repository address"} iconVisible={false}/>
-                    <View style={styles.ViewContent}>
-                        <View style={{...styles.flexContent, ...styles.flexDirectionColumn}}>
-                            <View style={styles.flexGitInfoView}>
-                                <Text style={styles.TextMain}>github.com</Text>
-                                
-                                <TouchableOpacity onPress={navToUserName}>
-                                    <View style={styles.flexDirectionRow}>
-                                        <Text style={styles.TextMain}>/</Text>
-                                        <Text style={styles.TextPlaceHolder}>
-                                            {userName !== "" ? userName : "user"}
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity onPress={navToInsertGit}>
-                                    <View style={styles.flexDirectionRow}>
-                                        <Text style={styles.TextMain}>/</Text>
-                                        <Text style={styles.TextPlaceHolder}>
-                                            {repoName !== "" ? repoName : "repo"}
-                                        </Text>
-                                    </View>
-                                </TouchableOpacity>
-                                {_renderErrorMessages()}
-                            </View>
+            <SafeAreaView style={{...styles.MainView, ...{backgroundColor}}}>
+                <Header headerTitle={"Set the repository address"} iconVisible={false}/>
+                <View style={{...styles.flexContent, ...styles.flexDirectionColumn}}>
+                    <Text style={styles.TextMain}>github.com</Text>
+                    
+                    <TouchableOpacity onPress={navToUserName}>
+                        <View style={styles.flexDirectionRow}>
+                            <Text style={styles.TextMain}>/</Text>
+                            <Text style={styles.TextPlaceHolder}>
+                                {userName !== "" ? userName : "user"}
+                            </Text>
                         </View>
-                    </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity onPress={navToInsertGit}>
+                        <View style={styles.flexDirectionRow}>
+                            <Text style={styles.TextMain}>/</Text>
+                            <Text style={styles.TextPlaceHolder}>
+                                {repoName !== "" ? repoName : "repo"}
+                            </Text>
+                        </View>
+                    </TouchableOpacity>
+                    {_renderErrorMessages()}
                 </View>
                 {_renderFooter()}
             </SafeAreaView>
@@ -235,10 +229,7 @@ var styles = StyleSheet.create({
     },
     flexContent: {
         paddingLeft: "8%",
-        flex: 10
-    },
-    flexGitInfoView: {
-        flex: 0.7
+        flex: 7
     },
     flexErrorView: {
         flexDirection: 'row'
